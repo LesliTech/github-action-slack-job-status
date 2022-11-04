@@ -1,0 +1,31 @@
+# action.yml
+name: "Post Workflow Status To Slack"
+description: "Post workflows Succes/Failure/Cancel jonb status to Slack using bot"
+author: "Pritam Kadam"
+
+inputs:
+  job-status:
+    description: "Job status i.e. Success/Failure/Cancelled"
+    required: true
+  slack-bot-token:
+    description: "Slack bot token used to send message to slack channel"
+    required: true
+  channel:
+    description: "Slack channel where job status message will be posted"
+    required: true
+  msg:
+    description: "Slack custom msg"
+    required: false
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.job-status }}
+    - ${{ inputs.slack-bot-token }}
+    - ${{ inputs.channel }}
+    - ${{ inputs.msg }}
+
+branding:
+  icon: "activity"
+  color: "green"
